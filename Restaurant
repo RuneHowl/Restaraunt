@@ -20,7 +20,7 @@ void printCheck(menuItemType mList[], int listSize,
 void makeSelection(int listSize, 
                    int cList[], int& cListLength);
 bool isItemSelected(int cList[], int cListLength, int itemNo);
-uj
+
 int main()
 {
     menuItemType menuList[NO_OF_ITEMS];
@@ -31,7 +31,7 @@ int main()
 
     cout << fixed << showpoint << setprecision(2);
 
-    inFile.open("Ch9_Ex4Data.txt");
+    inFile.open("Ch9_Ex5Data.txt");
 
     if (!inFile)
     {
@@ -78,10 +78,12 @@ void printCheck(menuItemType mList[], int listSize,
     int i;
     double salesTax;
     double amountDue = 0;
+    
 
     cout << "Welcome to Johnny's Resturant" << endl;
     for (i = 0; i < cListLength; i++)
     {
+        
         cout << left << setw(15) << mList[cList[i]].menuItem
              << right << " $" << setw(4) << mList[cList[i]].menuPrice << endl;
     amountDue += mList[cList[i]].menuPrice;
@@ -90,7 +92,8 @@ void printCheck(menuItemType mList[], int listSize,
     salesTax = amountDue * .05;
     cout << left << setw(15) << "Tax " << right << " $" 
          << salesTax << endl;
-    amountDue = amountDue + salesTax;
+
+     amountDue = amountDue + salesTax;
     cout << left << setw(15) << "Amount Due " << right 
          << " $" << amountDue << endl;
 }
@@ -100,13 +103,14 @@ void makeSelection(int listSize,
 {
     int selectionNo = 0;
     int itemNo;
+    
 
     char response;
 
     cListLength = 0;
 
     cout << "You can make up to " << listSize
-         << " single order selections" << endl;
+         << "different selections" << endl;
 
     cout << "Do you want to make selection Y/y (Yes), N/n (No): ";
     cin >> response;
@@ -118,8 +122,12 @@ void makeSelection(int listSize,
         cout << "Enter item number: ";
         cin >> itemNo;
         cout << endl;
+        
+         cout << "How many orders: ";
+         cin >> selectionNo;
+         cout << endl;
 
-        if (!isItemSelected(cList,cListLength,itemNo))
+      if (!isItemSelected(cList,cListLength,itemNo))
             cList[cListLength++] = itemNo - 1;
         else
             cout << "Item already selected" << endl;
