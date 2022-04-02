@@ -14,11 +14,10 @@ struct menuItemType
     
 };
 
-// TODO: Change your prototypes after you make the changes to the definitions
 void getData(ifstream& inFile, menuItemType mList[], int listSize);
 void showMenu(menuItemType mList[], int listSize);
 void printCheck(menuItemType mList[], int listSize, 
-                int cList[], int cListLength);
+                int cList[], int cListLength, int qList[]);
 void makeSelection(int listSize, 
                    int cList[], int& cListLength,int qList[]);
 bool isItemSelected(int cList[], int cListLength, int itemNo,int qList[]);
@@ -28,9 +27,9 @@ int main()
 {
     menuItemType menuList[NO_OF_ITEMS];
     int choiceList[NO_OF_ITEMS];
-    int quantities[NO_OF_ITEMS];
-    // TODO: Declare quantities array of length NO_OF_ITEMS
-    int choiceListLength = 0; // TODO: Initialize with 0
+    int quantitiesList[NO_OF_ITEMS];
+    int choiceListLength = 0; 
+    
     
 
     ifstream inFile;
@@ -50,9 +49,9 @@ int main()
     getData(inFile, menuList, NO_OF_ITEMS);
     showMenu(menuList, NO_OF_ITEMS);
     makeSelection(NO_OF_ITEMS, 
-                  choiceList, choiceListLength,quantities);
+                  choiceList, choiceListLength,quantitiesList);
     printCheck(menuList, NO_OF_ITEMS, 
-               choiceList, choiceListLength);
+               choiceList, choiceListLength, quantitiesList);
     
     
 
@@ -82,7 +81,7 @@ void showMenu(menuItemType mList[], int listSize)
 }
 
 void printCheck(menuItemType mList[], int listSize, 
-				int cList[], int cListLength,int qList[]); 
+				int cList[], int cListLength,int qList[]) 
 {
     int i;
     double salesTax;
@@ -96,7 +95,7 @@ void printCheck(menuItemType mList[], int listSize,
   
         cout << left << setw(15) << mList[cList[i]].menuItem
              << right << " $" << setw(4) << mList[cList[i]].menuPrice << endl;
-    amountDue +=  mList[qList[i]].quantities * mList[cList[i]].menuPrice;
+    amountDue +=  mList[qList[i]].quantity * mList[cList[i]].menuPrice;
     }
 
     salesTax = amountDue * .05;
@@ -152,7 +151,7 @@ void makeSelection(int listSize,
 }
 
 
-bool isItemSelected(int cList[], int cListLength, int itemNo, int quantity)
+bool isItemSelected(int cList[], int cListLength, int itemNo, int qList[])
 {
     bool found = false;
     
