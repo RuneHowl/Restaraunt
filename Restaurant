@@ -20,8 +20,8 @@ void showMenu(menuItemType mList[], int listSize);
 void printCheck(menuItemType mList[], int listSize, 
                 int cList[], int cListLength);
 void makeSelection(int listSize, 
-                   int cList[], int& cListLength,int qList[], int& qListLength);
-bool isItemSelected(int cList[], int cListLength, int itemNo,int qList[], int qListLength);
+                   int cList[], int& cListLength,int qList[]);
+bool isItemSelected(int cList[], int cListLength, int itemNo,int qList[]);
 
 
 int main()
@@ -30,8 +30,8 @@ int main()
     int choiceList[NO_OF_ITEMS];
     int quantities[NO_OF_ITEMS];
     // TODO: Declare quantities array of length NO_OF_ITEMS
-    int choiceListLength; // TODO: Initialize with 0
-    int quantitiesLength = 0;
+    int choiceListLength = 0; // TODO: Initialize with 0
+    
 
     ifstream inFile;
 
@@ -46,13 +46,13 @@ int main()
         return 1;
     }
 
-    // TODO: Change the parameters if needed after making changes to definitions
+    
     getData(inFile, menuList, NO_OF_ITEMS);
     showMenu(menuList, NO_OF_ITEMS);
     makeSelection(NO_OF_ITEMS, 
-                  choiceList, choiceListLength,quantitiesList,quantitesListLength);
+                  choiceList, choiceListLength,quantities);
     printCheck(menuList, NO_OF_ITEMS, 
-               choiceList, choiceListLength,quantitiesList,quantitesListLength);
+               choiceList, choiceListLength);
     
     
 
@@ -82,13 +82,13 @@ void showMenu(menuItemType mList[], int listSize)
 }
 
 void printCheck(menuItemType mList[], int listSize, 
-				int cList[], int cListLength,int qList[], int qListLength); /* TODO: Add quantities array here same as you did with cList */
+				int cList[], int cListLength,int qList[]); 
 {
     int i;
     double salesTax;
     double amountDue = 0;
     
-    // TODO: Show the quantity output somewhere here    
+      
 
     cout << "Welcome to Johnny's Resturant" << endl;
     for (i = 0; i < cListLength; i++)
@@ -109,7 +109,7 @@ void printCheck(menuItemType mList[], int listSize,
 }
 
 void makeSelection(int listSize, 
-                   int cList[], int& cListLength,int qList[], int qListLength) /* TODO: Add quantities array here same as you did with cList */
+                   int cList[], int& cListLength,int qList[]) 
 {
     int quantity = 0;
     int itemNo;
@@ -137,11 +137,10 @@ void makeSelection(int listSize,
          cin >> quantity;
          cout << endl;
 
-      if(!isItemSelected(cList, cListLength, itemNo, quantity))
+      if(!isItemSelected(cList, cListLength, itemNo, qList))
       {
           cList[cListLength++] = itemNo - 1;
-          qList[qListLength++] = quantity - 1;// TODO: Careful don't lose track of current item by incrementing cListLength before pushing to quantities array
-          // TODO: Push quantity to quantities array
+          qList[cListLength++] = quantity - 1;
       }
         else
             cout << "Item already selected" << endl;
