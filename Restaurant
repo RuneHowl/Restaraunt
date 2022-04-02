@@ -10,12 +10,12 @@ const int NO_OF_ITEMS = 8;
 struct menuItemType
 {
     string menuItem;
-    double menuPrice;
+    double menuPrice, quantity;
     
 };
 
 void getData(ifstream& inFile, menuItemType mList[], int listSize);
-void showMenu(menuItemType mList[], int listSize);
+void showMenu(menuItemType mList[], int listSize, int itemQuantity);
 void printCheck(menuItemType mList[], int listSize, 
                 int cList[], int cListLength);
 void makeSelection(int listSize, 
@@ -82,7 +82,7 @@ void printCheck(menuItemType mList[], int listSize,
     int i;
     double salesTax;
     double amountDue = 0;
-    double quantity;
+    
     
 
     cout << "Welcome to Johnny's Resturant" << endl;
@@ -91,7 +91,7 @@ void printCheck(menuItemType mList[], int listSize,
   
         cout << left << setw(15) << mList[cList[i]].menuItem
              << right << " $" << setw(4) << mList[cList[i]].menuPrice << endl;
-    amountDue +=  mList[cList[i]].menuPrice;
+    amountDue +=  quantity[i] * mList[cList[i]].menuPrice;
     }
 
     salesTax = amountDue * .05;
@@ -104,11 +104,11 @@ void printCheck(menuItemType mList[], int listSize,
 }
 
 void makeSelection(int listSize, 
-                   int cList[], int& cListLength)
+                   int cList[], int& cListLength, quantity[])
 {
     int quantity = 0;
     int itemNo;
-    double quantitySubtotal; 
+    
 
     char response;
 
@@ -132,7 +132,7 @@ void makeSelection(int listSize,
          cin >> quantity;
          cout << endl;
 
-      if(!isItemSelected(cList, cListLength, itemNo))
+      if(!isItemSelected(cList, cListLength, itemNo, quantity))
             cList[cListLength++] = itemNo - 1;
         else
             cout << "Item already selected" << endl;
