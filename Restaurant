@@ -11,6 +11,7 @@ struct menuItemType
 {
     string menuItem;
     double menuPrice;
+    
 };
 
 void getData(ifstream& inFile, menuItemType mList[], int listSize);
@@ -20,6 +21,7 @@ void printCheck(menuItemType mList[], int listSize,
 void makeSelection(int listSize, 
                    int cList[], int& cListLength);
 bool isItemSelected(int cList[], int cListLength, int itemNo);
+
 
 int main()
 {
@@ -46,6 +48,8 @@ int main()
                   choiceList, choiceListLength);
     printCheck(menuList, NO_OF_ITEMS, 
                choiceList, choiceListLength);
+    
+    
 
     return 0;
 }
@@ -78,22 +82,23 @@ void printCheck(menuItemType mList[], int listSize,
     int i;
     double salesTax;
     double amountDue = 0;
+    double quantity;
     
 
     cout << "Welcome to Johnny's Resturant" << endl;
     for (i = 0; i < cListLength; i++)
     {
-        
+  
         cout << left << setw(15) << mList[cList[i]].menuItem
              << right << " $" << setw(4) << mList[cList[i]].menuPrice << endl;
-    amountDue += mList[cList[i]].menuPrice;
+    amountDue +=  mList[cList[i]].menuPrice;
     }
 
     salesTax = amountDue * .05;
     cout << left << setw(15) << "Tax " << right << " $" 
          << salesTax << endl;
 
-     amountDue = amountDue + salesTax;
+        amountDue =   amountDue + salesTax;
     cout << left << setw(15) << "Amount Due " << right 
          << " $" << amountDue << endl;
 }
@@ -101,16 +106,16 @@ void printCheck(menuItemType mList[], int listSize,
 void makeSelection(int listSize, 
                    int cList[], int& cListLength)
 {
-    int selectionNo = 0;
+    int quantity = 0;
     int itemNo;
-    
+    double quantitySubtotal; 
 
     char response;
 
     cListLength = 0;
 
     cout << "You can make up to " << listSize
-         << "different selections" << endl;
+         << " different selections" << endl;
 
     cout << "Do you want to make selection Y/y (Yes), N/n (No): ";
     cin >> response;
@@ -124,10 +129,10 @@ void makeSelection(int listSize,
         cout << endl;
         
          cout << "How many orders: ";
-         cin >> selectionNo;
+         cin >> quantity;
          cout << endl;
 
-      if (!isItemSelected(cList,cListLength,itemNo))
+      if(!isItemSelected(cList, cListLength, itemNo))
             cList[cListLength++] = itemNo - 1;
         else
             cout << "Item already selected" << endl;
@@ -138,9 +143,11 @@ void makeSelection(int listSize,
     }
 }
 
+
 bool isItemSelected(int cList[], int cListLength, int itemNo)
 {
     bool found = false;
+    
 
     for (int i = 0; i < cListLength; i++)
         if (cList[i] == itemNo)
