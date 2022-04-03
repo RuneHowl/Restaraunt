@@ -50,8 +50,7 @@ int main()
     showMenu(menuList, NO_OF_ITEMS);
     makeSelection(NO_OF_ITEMS, 
                   choiceList, choiceListLength,quantitiesList);
-    printCheck(menuList, NO_OF_ITEMS, 
-               choiceList, choiceListLength, quantitiesList);
+    printCheck(menuList, NO_OF_ITEMS,choiceList, choiceListLength, quantitiesList);
     
     
 
@@ -80,29 +79,33 @@ void showMenu(menuItemType mList[], int listSize)
     cout << endl;
 }
 
+
 void printCheck(menuItemType mList[], int listSize, 
 				int cList[], int cListLength,int qList[]) 
-{
+    {
+        
+   
     int i;
     double salesTax;
     double amountDue = 0;
     
-      
+      cout << fixed << showpoint << setprecision(2);
+
 
     cout << "Welcome to Johnny's Resturant" << endl;
     for (i = 0; i < cListLength; i++)
-    {
+    {const int itemIndex = cList[i];
   
-        cout << left << setw(15) << mList[cList[i]].menuItem
-             << right << " $" << setw(4) << mList[cList[i]].menuPrice << endl;
-    amountDue +=  mList[qList[i]].quantity * mList[cList[i]].menuPrice;
+        cout << left << setw(15) << mList[itemIndex].menuItem
+             << right << " $" << setw(4) << mList[itemIndex].menuPrice << endl;
+    amountDue += mList[qList[i]].quantity * mList[itemIndex].menuPrice;
     }
 
     salesTax = amountDue * .05;
     cout << left << setw(15) << "Tax " << right << " $" 
          << salesTax << endl;
 
-        amountDue =   amountDue + salesTax;
+        amountDue = amountDue + salesTax;
     cout << left << setw(15) << "Amount Due " << right 
          << " $" << amountDue << endl;
 }
@@ -139,7 +142,7 @@ void makeSelection(int listSize,
       if(!isItemSelected(cList, cListLength, itemNo, qList))
       {
           cList[cListLength++] = itemNo - 1;
-          qList[cListLength++] = quantity - 1;
+          qList[cListLength++] = quantity;
       }
         else
             cout << "Item already selected" << endl;
